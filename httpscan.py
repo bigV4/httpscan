@@ -4,7 +4,7 @@
 
 import re
 import sys
-import Queue
+import Queue #Queue模块是提供队列操作的模块
 import threading
 import optparse
 import requests
@@ -41,17 +41,17 @@ class scan():
             title = "None"
           banner = ''
           try:
-            banner += r.headers['Server'][:20] #get the server banner
+            banner += r.headers['Server'][:25] #get the server banner
           except:pass
           printLock.acquire()
-          print "|%-16s|%-6s|%-20s|%-30s|" % (ip,status,banner,title)
-          print "+----------------+------+--------------------+------------------------------+"
+          print("|%-16s|%-6s|%-25s|%-30s|" % (ip,status,banner,title))
+          print("+----------------+------+--------------------+------------------------------+")
 
           #Save log
           with open("./log/"+self.cidr.strNormal(3)+".log",'a') as f:
             f.write(ip+"\n")
 
-        except Exception,e:
+        except Exception as e:
           printLock.acquire()
         finally:
           printLock.release()
@@ -72,9 +72,9 @@ if __name__ == "__main__":
     parser.print_help()
     sys.exit(0)
 
-  print "+----------------+------+--------------------+------------------------------+"
-  print "|     IP         |Status|       Server       |            Title             |"
-  print "+----------------+------+--------------------+------------------------------+"
+  print("+----------------+------+-------------------------+------------------------------+")
+  print("|     IP         |Status|          Server         |            Title             |")
+  print("+----------------+------+-------------------------+------------------------------+")
 
   s = scan(cidr=args[0],threads_num=options.threads_num)
   s.run()
